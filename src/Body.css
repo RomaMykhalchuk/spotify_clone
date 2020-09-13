@@ -1,0 +1,7 @@
+.body {
+  padding: 30px;
+  flex: 0.8;
+  background-color: purple;
+  color: white;
+  height: 100vh;
+}
