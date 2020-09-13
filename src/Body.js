@@ -1,10 +1,11 @@
-import React from 'react';
-import './Body.css';
+import React from "react";
+import "./Body.css";
+import { Header } from "./Header";
 
-export const Body = () => {
+export const Body = ({ spotify }) => {
   return (
     <div className="body">
-      <h1>BODY</h1>
+      <Header spotify={spotify} />
     </div>
   );
 };
