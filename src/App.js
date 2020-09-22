@@ -29,16 +29,26 @@ function App() {
           user,
         });
       });
-      spotify.getUserPlaylists().then(playlists => {
+      spotify.getUserPlaylists().then((playlists) => {
         dispatch({
-          type:"SET_PLAYLISTS",
+          type: "SET_PLAYLISTS",
           playlists,
         });
       });
+      spotify.getPlaylist("37i9dQZF1E3a9MIwkIMedz").then((response) =>
+        dispatch({
+          type: "SET_DISCOVER_WEEKLY",
+          discover_weekly: response,
+        })
+      );
     }
-  }, []);
-  console.log(token); 
-  return <div className="app">{token ? <Player spotify={spotify} /> : <Login />}</div>;
+  }, [dispatch]);
+  console.log(token);
+  return (
+    <div className="app">
+      {token ? <Player spotify={spotify} /> : <Login />}
+    </div>
+  );
 }
 
 export default App;
