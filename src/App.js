@@ -9,18 +9,19 @@ const spotify = new SpotifyWebApi();
 
 function App() {
   const [{ token }, dispatch] = useDataLayerValue();
+
   console.log(token);
   useEffect(() => {
     const hash = getTokenFromUrl();
     window.location.hash = "";
     const _token = hash.access_token;
-
+    
     if (_token) {
       dispatch({
         type: "SET_TOKEN",
         token: _token,
       });
-      spotify.setAccessToken(_token);
+      spotify.setAccessToken(_token)
       spotify.getMe().then((user) => {
        dispatch({
           type: "SET_USER",
@@ -33,14 +34,15 @@ function App() {
           playlists,
         });
       });
-      spotify.getPlaylist("37i9dQZF1E3a9MIwkIMedz").then((response) =>
+
+      spotify.getPlaylist("37i9dQZF1DX0UrRvztWcAU").then((response) =>
         dispatch({
           type: "SET_DISCOVER_WEEKLY",
           discover_weekly: response,
         })
       );
     }
-  }, [dispatch]);
+  }, [dispatch, token]);
   return (
     <div className="app">
       {token ? <Player spotify={spotify} /> : <Login />}

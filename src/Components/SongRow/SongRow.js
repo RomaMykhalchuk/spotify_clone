@@ -3,7 +3,7 @@ import "./SongRow.css";
 
 export const SongRow = ({ track, playSong }) => {
   return (
-    <div className="songRow" >
+    <div className="songRow" onClick={()=> playSong(track.id)}>
       <img
         src={track.album.images[0].url}
         className="songRow__album"

@@ -9,46 +9,21 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 export const Body = ({ spotify }) => {
-  const [{ discover_weekly }, dispatch] = useDataLayerValue();
-  // const playPlaylist = (id) => {
-  //   spotify
-  //     .play({
-  //       context_uri: `spotify:playlist:e250c14aef2e40e5b027154f126f9920`,
-  //     })
-  //     .then((res) => {
-  //       spotify.getMyCurrentPlayingTrack().then((r) => {
-  //         dispatch({
-  //           type: "SET_ITEM",
-  //           item: r.item,
-  //         });
-  //         dispatch({
-  //           type: "SET_PLAYING",
-  //           playing: true,
-  //         });
-  //       });
-  //     });
-  // };
+  const [{ discover_weekly, token }, dispatch] = useDataLayerValue();
 
+  //got rt
   const playSong = (id) => {
-    fetch('curl -X GET "https://api.spotify.com/v1/me/player/currently-playing" -H "Authorization: Bearer {BQCzPsH3Kqee4Tf05o4iuU-9TxQ-LbNitO-jj29tLdIIjAZ4b2D-ONwfXnkzixafpPAlSfOPNaspdcVj6QUxpH3F8JbwmyxZkXN0QhqRr3vEkNVeZoabz3u4eJRdufOpg3FTo-lg4TsDxMccvmnGIT7gxVnuwZAD0spVUJbEUyUcGXqt8dtl}"')
-    .then(response => response.json())
-    .then(data =>console.log(data));
-    // spotify
-    //   .play({
-    //     uris: [`spotify:track:${id}`],
-    //   })
-    //   .then((res) => {
-    //     spotify.getMyCurrentPlayingTrack().then((r) => {
-    //       dispatch({
-    //         type: "SET_ITEM",
-    //         item: r.item,
-    //       });
-    //       dispatch({
-    //         type: "SET_PLAYING",
-    //         playing: true,
-    //       });
-    //     });
-    //   });
+    fetch(`https://api.spotify.com/v1/tracks/${id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((r) => console.log(r));
   };
 
   return (
@@ -58,7 +33,7 @@ export const Body = ({ spotify }) => {
         <img src={discover_weekly?.images[0].url} alt="" />
         <div className="body__infoText">
           <strong onClick={playSong}>PLAYLIST</strong>
-          <h2>Discover weekly</h2>
+          <h2>{discover_weekly?.name}</h2>
           <p>{discover_weekly?.description}</p>
         </div>
       </div>
@@ -73,7 +48,7 @@ export const Body = ({ spotify }) => {
         </div>
 
         {discover_weekly?.tracks.items.map((item) => (
-          <SongRow track={item.track} key={item.track.id} />
+          <SongRow track={item.track} key={item.track.id} playSong={playSong} />
         ))}
       </div>
     </div>

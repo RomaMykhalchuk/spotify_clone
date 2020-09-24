@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./Footer.css";
 import { useDataLayerValue } from "../../DataLayer";
+
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
@@ -14,13 +15,13 @@ import Grid from "@material-ui/core/Grid";
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
 
 export const Footer = ({ spotify }) => {
-  const [{ token, item, playing }, dispatch] = useDataLayerValue();
-
-  console.log(item);
-
+  const [{ token, item, playing,  playlists, current_playlist }, dispatch] = useDataLayerValue();
+  console.log(playlists);
+  console.log(current_playlist);
+ 
   useEffect(() => {
-
     spotify.getMyCurrentPlaybackState().then((r) => {
+      console.log(r);
       dispatch({
         type: "SET_PLAYING",
         playing: r.is_playing,
