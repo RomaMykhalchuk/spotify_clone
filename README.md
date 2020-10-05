@@ -1,5 +1,7 @@
 # spotify_clone_application
 
+<a href="https://romamykhalchuk.github.io/spotify_clone/#">DEMO</a>
+
 Simple Spotify clone build with React. 
 Basic features:
  - user authentication (via Spotify for developers API);
